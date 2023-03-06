@@ -1,0 +1,19 @@
+#!/bin/bash
+
+OUTLOOK="outlook.office365.com"
+GOOGLE="imap.gmail.com"
+FLAG=""
+
+if ping -q -w 1 -c 1 $OUTLOOK &> /dev/null; then
+    mbsync -q uu:Inbox 2> /dev/null
+    FLAG=1
+fi
+
+if ping -q -w 1 -c 1 $GOOGLE &> /dev/null; then
+    mbsync -q gmail 2> /dev/null
+    FLAG=1
+fi
+
+if [[ -z $FLAG ]]; then
+    mu index --quiet 
+fi
